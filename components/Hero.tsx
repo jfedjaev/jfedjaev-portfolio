@@ -1,13 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Twitter } from 'lucide-react'
+import { ArrowRight, Calendar, Github, Linkedin, Mail, Twitter } from 'lucide-react'
 import Image from 'next/image'
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 py-24">
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-5xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -31,52 +31,73 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          <p className="text-blue-400 font-medium mb-4">Technical Program Manager</p>
+          <p className="text-blue-400 font-medium mb-4 text-lg">
+            Beratung für Autonomous Mobility, BCI & KI
+          </p>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
             Juri Fedjaev
           </h1>
-          <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Building autonomous systems at Volkswagen. 
-            Former BCI researcher. AI/ML product leader.
+          <p className="text-xl md:text-2xl text-gray-400 mb-6 max-w-3xl mx-auto">
+            Technical Program Manager & Strategieberater
+          </p>
+          <p className="text-lg text-gray-500 mb-10 max-w-2xl mx-auto">
+            Ich helfe Unternehmen, autonome Systeme und KI-Produkte zu skalieren. 
+            Von 0 auf 100 Fahrzeuge bei VW. €1,9 Milliarden Strategie-Initiativen. 
+            Jetzt verfügbar für Ihr nächstes Projekt.
           </p>
           
-          <div className="flex justify-center gap-4 mb-12">
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
             <a 
-              href="https://github.com/jfedjaev" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+              href="#consulting"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-blue-500 hover:bg-blue-600 rounded-lg font-medium text-lg transition-colors"
             >
-              <Github size={20} />
+              <Calendar size={20} />
+              Beratungspakete ansehen
+              <ArrowRight size={20} />
             </a>
+            <a 
+              href="#contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-medium text-lg transition-colors"
+            >
+              <Mail size={20} />
+              Erstgespräch vereinbaren
+            </a>
+          </div>
+
+          <div className="flex justify-center gap-4 mb-8">
             <a 
               href="https://linkedin.com/in/jfedjaev" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+              aria-label="LinkedIn"
             >
               <Linkedin size={20} />
+            </a>
+            <a 
+              href="https://github.com/jfedjaev" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+              aria-label="GitHub"
+            >
+              <Github size={20} />
             </a>
             <a 
               href="https://twitter.com/jfedjaev" 
               target="_blank" 
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors"
+              aria-label="Twitter"
             >
               <Twitter size={20} />
             </a>
           </div>
 
-          <motion.a
-            href="#about"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
-          >
-            <span>Learn more</span>
-            <ArrowDown size={16} />
-          </motion.a>
+          <p className="text-sm text-gray-500">
+            Verfügbar ab März 2026 • Frankfurt & Remote
+          </p>
         </motion.div>
       </div>
     </section>
