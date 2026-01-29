@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { LanguageProvider } from '@/components/LanguageContext'
 
 export const metadata: Metadata = {
-  title: 'Juri Fedjaev | Technical Program Manager',
-  description: 'Autonomous Mobility • AI/ML • Neuroengineering',
+  title: 'Juri Fedjaev | COO & Program Leadership',
+  description: 'Strategic consulting for Autonomous Mobility, BCI & AI. Former VW Head of Program Management.',
 }
 
 export default function RootLayout({
@@ -12,8 +13,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="antialiased">{children}</body>
+    <html lang="de">
+      <body className="antialiased">
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   )
 }

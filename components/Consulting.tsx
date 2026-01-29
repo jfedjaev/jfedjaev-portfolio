@@ -1,218 +1,241 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Brain, Car, Cpu, TrendingUp, Users, Zap } from 'lucide-react'
+import { ArrowRight, Car, Brain, Cpu, Check } from 'lucide-react'
+import { useLanguage } from './LanguageContext'
 
 const services = [
   {
     icon: Car,
-    title: 'Autonomous Mobility Strategy',
-    description: 'Von ADAS bis Level 4: Ich helfe Ihnen, autonome Fahrzeugflotten profitabel zu skalieren. Basierend auf Erfahrung aus dem 0→100 Fahrzeug-Deployment bei Volkswagen.',
-    deliverables: ['Strategie-Roadmap', 'Technologie-Assessment', 'Go-to-Market Plan'],
+    image: 'https://images.unsplash.com/photo-1567789884554-0b844b597180?w=800&auto=format&fit=crop',
   },
   {
     icon: Brain,
-    title: 'BCI & Neurotechnology',
-    description: 'Brain-Computer Interfaces für MedTech und Research. Von der Idee bis zum Prototyp – mit gumpy, meinem Open-Source BCI-Toolkit.',
-    deliverables: ['Forschungsdesign', 'Signalverarbeitung', 'ML-Modelle'],
+    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=800&auto=format&fit=crop',
   },
   {
     icon: Cpu,
-    title: 'AI Product Leadership',
-    description: '200TB+ Datenplattformen, 15+ ML-Modelle in Produktion. Ich zeige Ihnen, wie Sie AI-Produkte skalieren, die echte ROI liefern.',
-    deliverables: ['AI-Strategie', 'MLOps-Setup', 'Team-Aufbau'],
-  },
-]
-
-const packages = [
-  {
-    name: 'Strategy Sprint',
-    price: '€8,500',
-    duration: '2 Wochen',
-    description: 'Schnelle Analyse und Roadmap für konkrete Herausforderungen',
-    features: [
-      '2-tägiger Workshop vor Ort',
-      'Aktuellen Stand analysieren',
-      '90-Tage Aktionsplan',
-      '1 Follow-up Call',
-    ],
-    cta: 'Jetzt Termin vereinbaren',
-    popular: false,
-  },
-  {
-    name: 'Transformation Partner',
-    price: '€15,000',
-    duration: 'pro Monat',
-    description: 'Hands-on Unterstützung bei der Implementierung',
-    features: [
-      '2 Tage/Woche vor Ort',
-      'Team-Coaching & Enablement',
-      'Technische Architektur',
-      'Unbegrenzte Calls & Slack',
-      'Wöchentliche Progress-Reviews',
-    ],
-    cta: 'Gespräch buchen',
-    popular: true,
-  },
-  {
-    name: 'Fractional CTO',
-    price: '€25,000',
-    duration: 'pro Monat',
-    description: 'Vollständige technische Führung für Ihr Team',
-    features: [
-      '3-4 Tage/Woche verfügbar',
-      'Strategische Technologieführung',
-      'Investoren- & Stakeholder-Kommunikation',
-      'M&A Technical Due Diligence',
-      'Priorisierung & Roadmap-Ownership',
-    ],
-    cta: 'Verfügbarkeit prüfen',
-    popular: false,
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&auto=format&fit=crop',
   },
 ]
 
 export default function Consulting() {
+  const { t, language } = useLanguage()
+
+  const packages = [
+    {
+      name: t('package.strategy.title'),
+      price: '€8,500',
+      duration: (lang: string) => lang === 'de' ? '2 Wochen' : '2 weeks',
+      description: t('package.strategy.desc'),
+      features: (lang: string) => lang === 'de' ? [
+        'Strategie-Workshop vor Ort',
+        'Markt- & Wettbewerbsanalyse',
+        '90-Tage Umsetzungsplan',
+        'Executive Summary'
+      ] : [
+        'On-site strategy workshop',
+        'Market & competitive analysis',
+        '90-day implementation plan',
+        'Executive summary'
+      ],
+      popular: false,
+    },
+    {
+      name: t('package.transformation.title'),
+      price: '€15,000',
+      duration: (lang: string) => lang === 'de' ? 'pro Monat' : 'per month',
+      description: t('package.transformation.desc'),
+      features: (lang: string) => lang === 'de' ? [
+        '2 Tage/Woche vor Ort',
+        'Team-Enablement',
+        'Change Management',
+        'Weekly Board Updates',
+        'Slack/WhatsApp Support'
+      ] : [
+        '2 days/week on-site',
+        'Team enablement',
+        'Change management',
+        'Weekly board updates',
+        'Slack/WhatsApp support'
+      ],
+      popular: true,
+    },
+    {
+      name: t('package.coo.title'),
+      price: '€25,000',
+      duration: (lang: string) => lang === 'de' ? 'pro Monat' : 'per month',
+      description: t('package.coo.desc'),
+      features: (lang: string) => lang === 'de' ? [
+        '3-4 Tage/Woche Engagement',
+        'P&L Verantwortung',
+        'Investorenkommunikation',
+        'M&A Due Diligence',
+        'Board Representation'
+      ] : [
+        '3-4 days/week engagement',
+        'P&L responsibility',
+        'Investor communication',
+        'M&A due diligence',
+        'Board representation'
+      ],
+      popular: false,
+    },
+  ]
+
   return (
-    <section id="consulting" className="py-24 px-6 bg-gray-900/50">
-      <div className="max-w-6xl mx-auto">
+    <section id="consulting" className="py-24 lg:py-32 bg-cream">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
-          <p className="text-blue-400 font-medium mb-4">Beratung & Strategie</p>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Technologieführung für Ihr nächstes Wachstum
+          <span className="text-gold-500 font-semibold tracking-wider uppercase text-sm mb-4 block">
+            {t('consulting.subtitle')}
+          </span>
+          <h2 className="font-display text-4xl lg:text-5xl font-bold text-navy-900 mb-6">
+            {t('consulting.title')}
           </h2>
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Von 0 auf 100 autonome Fahrzeuge. €1,9 Milliarden Strategie-Initiativen. 
-            200TB Datenplattformen. Ich bringe Erfahrung aus der Praxis – 
-            nicht nur aus PowerPoint.
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            {t('consulting.description')}
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-20">
+        <div className="grid md:grid-cols-3 gap-8 mb-24">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="p-8 rounded-2xl bg-gray-800/50 border border-gray-700 hover:border-blue-500/50 transition-all group"
+              className="group"
             >
-              <service.icon className="w-12 h-12 text-blue-400 mb-6 group-hover:scale-110 transition-transform" />
-              <h3 className="text-xl font-bold mb-4">{service.title}</h3>
-              <p className="text-gray-400 mb-6">{service.description}</p>
-              <ul className="space-y-2">
-                {service.deliverables.map((item, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
-                    <Zap size={14} className="text-blue-400" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <div className="relative h-64 mb-6 rounded-xl overflow-hidden">
+                <img
+                  src={service.image}
+                  alt=""
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 to-transparent" />
+                <div className="absolute bottom-6 left-6">
+                  <service.icon className="w-10 h-10 text-gold-400 mb-2" />
+                </div>
+              </div>
+              <h3 className="font-display text-2xl font-bold text-navy-900 mb-3">
+                {t(`service.${['mobility', 'bci', 'ai'][index]}.title`)}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {t(`service.${['mobility', 'bci', 'ai'][index]}.desc`)}
+              </p>
             </motion.div>
           ))}
         </div>
 
-        {/* Trust Signals */}
+        {/* Stats Bar */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 py-12 border-y border-gray-800"
+          className="bg-navy-900 rounded-2xl p-12 mb-24"
         >
-          {[
-            { number: '€1.9B', label: 'Strategie-Initiativen geleitet' },
-            { number: '0→100', label: 'Fahrzeuge in 3 Städten deployed' },
-            { number: '200TB+', label: 'Datenplattform gebaut' },
-            { number: '15+', label: 'ML-Modelle in Produktion' },
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-blue-400 mb-2">{stat.number}</div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Packages */}
-        <div className="mb-8">
-          <h3 className="text-2xl font-bold text-center mb-12">Beratungspakete</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {packages.map((pkg, index) => (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { value: '€1.9B', label: t('stats.strategy') },
+              { value: '0→100', label: t('stats.vehicles') },
+              { value: '200TB+', label: t('stats.data') },
+              { value: '15+', label: t('stats.models') },
+            ].map((stat, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`relative p-8 rounded-2xl border ${
-                  pkg.popular 
-                    ? 'bg-blue-600/10 border-blue-500 scale-105' 
-                    : 'bg-gray-800/50 border-gray-700'
+                className="text-center"
+              >
+                <div className="text-4xl lg:text-5xl font-bold text-gold-400 mb-2 font-display">
+                  {stat.value}
+                </div>
+                <div className="text-gray-400 text-sm uppercase tracking-wider">
+                  {stat.label}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Packages */}
+        <div className="mb-8">
+          <h3 className="font-display text-3xl font-bold text-navy-900 text-center mb-12">
+            {t('packages.title')}
+          </h3>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {packages.map((pkg, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
+                className={`relative rounded-2xl p-8 transition-all hover:-translate-y-2 ${
+                  pkg.popular
+                    ? 'bg-navy-900 text-white shadow-2xl scale-105'
+                    : 'bg-white border border-gray-200 hover:shadow-xl'
                 }`}
               >
                 {pkg.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-blue-500 text-sm font-medium rounded-full">
-                    Beliebt
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gold-500 text-navy-900 text-sm font-semibold rounded-full">
+                    {t('package.popular')}
                   </div>
                 )}
-                <h4 className="text-xl font-bold mb-2">{pkg.name}</h4>
+
+                <h4 className={`font-display text-xl font-bold mb-2 ${pkg.popular ? 'text-white' : 'text-navy-900'}`}>
+                  {pkg.name}
+                </h4>
+
                 <div className="mb-4">
-                  <span className="text-4xl font-bold">{pkg.price}</span>
-                  <span className="text-gray-400 text-sm"> / {pkg.duration}</span>
+                  <span className={`text-4xl font-bold font-display ${pkg.popular ? 'text-gold-400' : 'text-navy-900'}`}>
+                    {pkg.price}
+                  </span>
+                  <span className={pkg.popular ? 'text-gray-400' : 'text-gray-500'}>
+                    {' / '}{pkg.duration(language)}
+                  </span>
                 </div>
-                <p className="text-gray-400 mb-6 text-sm">{pkg.description}</p>
+
+                <p className={`mb-8 ${pkg.popular ? 'text-gray-300' : 'text-gray-600'}`}>
+                  {pkg.description}
+                </p>
+
                 <ul className="space-y-3 mb-8">
-                  {pkg.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm">
-                      <TrendingUp size={16} className="text-blue-400 mt-0.5 shrink-0" />
-                      {feature}
+                  {pkg.features(language).map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <Check className={`w-5 h-5 mt-0.5 shrink-0 ${pkg.popular ? 'text-gold-400' : 'text-gold-500'}`} />
+                      <span className={pkg.popular ? 'text-gray-300' : 'text-gray-700'}>
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
+
                 <a
                   href="#contact"
-                  className={`block w-full py-3 px-6 rounded-lg text-center font-medium transition-colors ${
+                  className={`block w-full py-4 rounded-lg text-center font-semibold transition-all ${
                     pkg.popular
-                      ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                      : 'bg-gray-700 hover:bg-gray-600 text-white'
+                      ? 'bg-gold-500 hover:bg-gold-400 text-navy-900'
+                      : 'bg-navy-900 hover:bg-navy-800 text-white'
                   }`}
                 >
-                  {pkg.cta}
+                  {t('package.cta')}
                 </a>
               </motion.div>
             ))}
           </div>
         </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center py-16"
-        >
-          <p className="text-gray-400 mb-4">Verfügbar ab März 2026</p>
-          <p className="text-lg text-gray-300 mb-8">
-            Frankfurt & Remote | 2-4 Tage/Woche | Englisch & Deutsch
-          </p>
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-blue-500 hover:bg-blue-600 rounded-lg font-medium text-lg transition-colors"
-          >
-            <Users size={20} />
-            Erstgespräch vereinbaren
-            <ArrowRight size={20} />
-          </a>
-          <p className="text-sm text-gray-500 mt-4">
-            Kostenloses 30-minütiges Gespräch zur Bedarfsanalyse
-          </p>
-        </motion.div>
       </div>
     </section>
   )
