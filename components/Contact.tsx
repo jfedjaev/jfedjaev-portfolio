@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MapPin, Mail, Globe, CheckCircle, Send } from 'lucide-react'
+import { ArrowUpRight, Mail, MapPin, Linkedin, Minus } from 'lucide-react'
 import { useState } from 'react'
 import { useLanguage } from './LanguageContext'
 
@@ -14,207 +14,181 @@ export default function Contact() {
     interest: '',
     message: ''
   })
-  const [submitted, setSubmitted] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const subject = language === 'de' 
-      ? `Beratungsanfrage von ${formData.name}`
-      : `Consulting inquiry from ${formData.name}`
-    const body = `${t('contact.form.name')}: ${formData.name}\n${t('contact.form.company')}: ${formData.company}\nEmail: ${formData.email}\n${t('contact.form.interest')}: ${formData.interest}\n\n${formData.message}`
+      ? `Beratungsanfrage: ${formData.company}`
+      : `Consulting Inquiry: ${formData.company}`
+    const body = `Name: ${formData.name}\nCompany: ${formData.company}\nEmail: ${formData.email}\n\n${formData.message}`
     window.location.href = `mailto:j.fedjaev@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-    setSubmitted(true)
   }
 
-  const interests = language === 'de' ? [
-    { value: '', label: 'Bitte wählen...' },
-    { value: 'strategy', label: 'Autonomous Mobility Strategie' },
-    { value: 'bci', label: 'BCI & Neurotechnology' },
-    { value: 'ai', label: 'AI Product Leadership' },
-    { value: 'coo', label: 'COO-as-a-Service' },
-    { value: 'other', label: 'Sonstiges' },
-  ] : [
-    { value: '', label: 'Please select...' },
-    { value: 'strategy', label: 'Autonomous Mobility Strategy' },
-    { value: 'bci', label: 'BCI & Neurotechnology' },
-    { value: 'ai', label: 'AI Product Leadership' },
-    { value: 'coo', label: 'COO-as-a-Service' },
-    { value: 'other', label: 'Other' },
-  ]
-
   return (
-    <section id="contact" className="py-24 lg:py-32 bg-navy-900">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+    <section id="contact" className="py-24 lg:py-32 bg-white">
+      <div className="max-w-6xl mx-auto px-8 lg:px-16">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          className="grid lg:grid-cols-2 gap-16 mb-20"
         >
-          <div className="text-center mb-16">
-            <span className="text-gold-500 font-semibold tracking-wider uppercase text-sm mb-4 block">
-              {t('contact.subtitle')}
-            </span>
-            <h2 className="font-display text-4xl lg:text-5xl font-bold text-white mb-6">
-              {t('contact.title')}
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <Minus className="text-gray-400" size={20} />
+              <span className="text-xs tracking-[0.3em] uppercase text-gray-400">
+                {language === 'de' ? 'Kontakt' : 'Contact'}
+              </span>
+            </div>
+            <h2 className="font-serif text-4xl lg:text-5xl text-gray-900 mb-6">
+              {language === 'de' 
+                ? 'Lassen Sie uns Ihre nächste Phase gestalten'
+                : 'Let us shape your next phase'}
             </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              {t('contact.description')}
+            <p className="text-lg text-gray-600 leading-relaxed">
+              {language === 'de'
+                ? 'Verfügbar ab März 2026 für strategische Beratung und operative Führung. Erstgespräch kostenlos.'
+                : 'Available from March 2026 for strategic consulting and operational leadership. Initial consultation complimentary.'}
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl p-8 lg:p-10"
-            >
-              {submitted ? (
-                <div className="text-center py-12">
-                  <CheckCircle className="mx-auto mb-4 text-green-500" size={64} />
-                  <h3 className="text-2xl font-bold text-navy-900 mb-2">{t('contact.form.success')}</h3>
-                  <p className="text-gray-600">{t('contact.form.success.desc')}</p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-navy-900 mb-2">{t('contact.form.name')} *</label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all"
-                        placeholder={language === 'de' ? 'Max Mustermann' : 'John Doe'}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-navy-900 mb-2">{t('contact.form.company')} *</label>
-                      <input
-                        type="text"
-                        required
-                        value={formData.company}
-                        onChange={(e) => setFormData({...formData, company: e.target.value})}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all"
-                        placeholder={language === 'de' ? 'Muster GmbH' : 'Acme Corp'}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-navy-900 mb-2">{t('contact.form.email')} *</label>
-                    <input
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all"
-                      placeholder="email@company.com"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-navy-900 mb-2">{t('contact.form.interest')} *</label>
-                    <select
-                      required
-                      value={formData.interest}
-                      onChange={(e) => setFormData({...formData, interest: e.target.value})}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all"
-                    >
-                      {interests.map(i => <option key={i.value} value={i.value}>{i.label}</option>)}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-navy-900 mb-2">{t('contact.form.message')}</label>
-                    <textarea
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
-                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 outline-none transition-all resize-none"
-                      placeholder={language === 'de' ? 'Beschreiben Sie Ihr Projekt...' : 'Describe your project...'}
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-4 px-6 rounded-lg bg-gold-500 hover:bg-gold-400 text-navy-900 font-semibold flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
-                  >
-                    <Send size={18} />
-                    {t('contact.form.submit')}
-                  </button>
-                </form>
-              )}
-            </motion.div>
-
-            {/* Info Cards */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="bg-navy-800 rounded-xl p-6 border border-gold-500/20">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gold-500/10 rounded-lg">
-                    <Globe className="text-gold-400" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-1">{t('contact.availability.title')}</h3>
-                    <p className="text-gray-400">{language === 'de' ? 'Ab März 2026' : 'From March 2026'}</p>
-                    <p className="text-gray-500 text-sm">{language === 'de' ? 'Frankfurt & Remote' : 'Frankfurt & Remote'}</p>
-                  </div>
-                </div>
+          <div className="lg:pt-16 space-y-8">
+            <div className="flex items-start gap-4">
+              <Mail className="text-gray-400 mt-1" size={18} />
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Email</p>
+                <a href="mailto:j.fedjaev@gmail.com" className="text-gray-900 hover:text-gray-600 transition-colors">
+                  j.fedjaev@gmail.com
+                </a>
               </div>
-
-              <div className="bg-navy-800 rounded-xl p-6 border border-gold-500/20">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gold-500/10 rounded-lg">
-                    <MapPin className="text-gold-400" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-1">{t('contact.location.title')}</h3>
-                    <p className="text-gray-400">Frankfurt am Main, Germany</p>
-                  </div>
-                </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <MapPin className="text-gray-400 mt-1" size={18} />
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">Location</p>
+                <p className="text-gray-900">Frankfurt & Remote</p>
               </div>
+            </div>
 
-              <div className="bg-navy-800 rounded-xl p-6 border border-gold-500/20">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gold-500/10 rounded-lg">
-                    <Mail className="text-gold-400" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-1">Email</h3>
-                    <p className="text-gray-400">j.fedjaev@gmail.com</p>
-                  </div>
-                </div>
+            <div className="flex items-start gap-4">
+              <Linkedin className="text-gray-400 mt-1" size={18} />
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-400 mb-1">LinkedIn</p>
+                <a href="https://linkedin.com/in/jfedjaev" target="_blank" rel="noopener noreferrer" className="text-gray-900 hover:text-gray-600 transition-colors inline-flex items-center gap-1">
+                  linkedin.com/in/jfedjaev
+                  <ArrowUpRight size={12} />
+                </a>
               </div>
+            </div>
+          </div>
+        </motion.div>
 
-              <div className="bg-navy-800 rounded-xl p-6 border border-gold-500/20">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gold-500/10 rounded-lg">
-                    <Globe className="text-gold-400" size={24} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-1">{t('contact.languages.title')}</h3>
-                    <p className="text-gray-400">{language === 'de' ? 'Deutsch, Englisch, Russisch' : 'German, English, Russian'}</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+        {/* Form */}
+        <motion.form
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          onSubmit={handleSubmit}
+          className="max-w-3xl"
+        >
+          <div className="grid md:grid-cols-2 gap-px bg-gray-200 mb-px">
+            <div className="bg-white p-6">
+              <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2">
+                {language === 'de' ? 'Name' : 'Name'} *
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                className="w-full border-0 border-b border-gray-200 focus:border-gray-900 focus:ring-0 px-0 py-2 text-gray-900 placeholder-gray-300"
+                placeholder={language === 'de' ? 'Vorname Nachname' : 'First Last'}
+              />
+            </div>
+            <div className="bg-white p-6">
+              <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2">
+                {language === 'de' ? 'Unternehmen' : 'Company'} *
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.company}
+                onChange={(e) => setFormData({...formData, company: e.target.value})}
+                className="w-full border-0 border-b border-gray-200 focus:border-gray-900 focus:ring-0 px-0 py-2 text-gray-900 placeholder-gray-300"
+                placeholder={language === 'de' ? 'Firma GmbH' : 'Company Inc.'}
+              />
+            </div>
           </div>
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center text-gray-500 mt-16"
+          <div className="grid md:grid-cols-2 gap-px bg-gray-200 mb-px">
+            <div className="bg-white p-6">
+              <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2">
+                Email *
+              </label>
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                className="w-full border-0 border-b border-gray-200 focus:border-gray-900 focus:ring-0 px-0 py-2 text-gray-900 placeholder-gray-300"
+                placeholder="name@company.com"
+              />
+            </div>
+            <div className="bg-white p-6">
+              <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2">
+                {language === 'de' ? 'Interesse' : 'Interest'}
+              </label>
+              <select
+                value={formData.interest}
+                onChange={(e) => setFormData({...formData, interest: e.target.value})}
+                className="w-full border-0 border-b border-gray-200 focus:border-gray-900 focus:ring-0 px-0 py-2 text-gray-900 bg-transparent"
+              >
+                <option value="">{language === 'de' ? 'Bitte wählen' : 'Please select'}</option>
+                <option value="strategy">{language === 'de' ? 'Strategie-Assessment' : 'Strategy Assessment'}</option>
+                <option value="transformation">{language === 'de' ? 'Transformation Partner' : 'Transformation Partner'}</option>
+                <option value="coo">COO-as-a-Service</option>
+                <option value="other">{language === 'de' ? 'Sonstiges' : 'Other'}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="bg-white p-6 mb-8">
+            <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2">
+              {language === 'de' ? 'Nachricht' : 'Message'}
+            </label>
+            <textarea
+              rows={4}
+              value={formData.message}
+              onChange={(e) => setFormData({...formData, message: e.target.value})}
+              className="w-full border-0 border-b border-gray-200 focus:border-gray-900 focus:ring-0 px-0 py-2 text-gray-900 placeholder-gray-300 resize-none"
+              placeholder={language === 'de' ? 'Beschreiben Sie Ihr Projekt kurz...' : 'Briefly describe your project...'}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="inline-flex items-center gap-3 px-10 py-4 bg-[#0a1628] text-white text-sm tracking-wider uppercase hover:bg-gray-800 transition-colors"
           >
-            © {new Date().getFullYear()} Juri Fedjaev. {t('footer.rights')}
-          </motion.p>
+            {language === 'de' ? 'Anfrage senden' : 'Send Inquiry'}
+            <ArrowUpRight size={16} />
+          </button>
+        </motion.form>
+
+        {/* Footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-32 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <p className="text-xs text-gray-400">
+            © {new Date().getFullYear()} Juri Fedjaev. {language === 'de' ? 'Alle Rechte vorbehalten.' : 'All rights reserved.'}
+          </p>
+          <p className="text-xs text-gray-400">
+            {language === 'de' ? 'Frankfurt am Main, Deutschland' : 'Frankfurt am Main, Germany'}
+          </p>
         </motion.div>
       </div>
     </section>
