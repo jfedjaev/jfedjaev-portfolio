@@ -15,6 +15,7 @@ const navItems = [
   { label: 'Experience', href: '#experience' },
   { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' },
+  { label: 'Angebot', href: '/angebot.pdf', external: true },
 ]
 
 export default function Hero() {
@@ -131,10 +132,12 @@ export default function Hero() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => (
+              {navItems.map((item: { label: string; href: string; external?: boolean }) => (
                 <a
                   key={item.href}
                   href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
                   className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors tracking-wide"
                 >
                   {item.label}
@@ -305,7 +308,7 @@ export default function Hero() {
                   src="/profile.jpg"
                   alt="Juri Fedjaev"
                   fill
-                  className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  className="object-cover transition-all duration-700"
                   priority
                 />
                 {/* Overlay gradient */}
