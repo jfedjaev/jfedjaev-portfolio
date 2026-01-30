@@ -78,8 +78,8 @@ export default function Services() {
   ]
 
   return (
-    <section id="services" className="py-24 lg:py-32 bg-[#fafaf9]">
-      <div className="max-w-6xl mx-auto px-8 lg:px-16">
+    <section id="services" className="py-24 lg:py-32 bg-[var(--bg-secondary)]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -88,12 +88,12 @@ export default function Services() {
           className="mb-20"
         >
           <div className="flex items-center gap-4 mb-6">
-            <Minus className="text-gray-400" size={20} />
-            <span className="text-xs tracking-[0.3em] uppercase text-gray-400">
+            <Minus className="text-[var(--text-tertiary)]" size={20} />
+            <span className="text-xs tracking-[0.3em] uppercase text-[var(--text-tertiary)]">
               {language === 'de' ? 'Leistungen' : 'Services'}
             </span>
           </div>
-          <h2 className="font-serif text-4xl lg:text-5xl text-gray-900 max-w-3xl">
+          <h2 className="font-serif text-4xl lg:text-5xl xl:text-6xl text-[var(--text-primary)] max-w-4xl leading-tight">
             {language === 'de' 
               ? 'Strategische Führung für komplexe Technologieprogramme'
               : 'Strategic leadership for complex technology programs'}
@@ -109,26 +109,26 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="grid lg:grid-cols-12 gap-8 pb-16 border-b border-gray-200 last:border-0"
+              className="grid lg:grid-cols-12 gap-8 pb-16 border-b border-[var(--border)] last:border-0"
             >
               <div className="lg:col-span-1">
-                <span className="text-xs text-gray-400 font-mono">{service.number}</span>
+                <span className="text-xs text-[var(--text-tertiary)] font-mono">{service.number}</span>
               </div>
               <div className="lg:col-span-4">
-                <h3 className="font-serif text-2xl lg:text-3xl text-gray-900">
+                <h3 className="font-serif text-2xl lg:text-3xl text-[var(--text-primary)]">
                   {service.title}
                 </h3>
               </div>
               <div className="lg:col-span-4">
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-[var(--text-secondary)] leading-relaxed">
                   {service.description}
                 </p>
               </div>
               <div className="lg:col-span-3">
                 <ul className="space-y-2">
                   {service.capabilities.map((cap, i) => (
-                    <li key={i} className="text-sm text-gray-500 flex items-center gap-2">
-                      <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                    <li key={i} className="text-sm text-[var(--text-secondary)] flex items-center gap-2">
+                      <span className="w-1 h-1 bg-[var(--text-tertiary)] rounded-full" />
                       {cap}
                     </li>
                   ))}
@@ -146,14 +146,14 @@ export default function Services() {
           className="mb-12"
         >
           <div className="flex items-center gap-4 mb-12">
-            <Minus className="text-gray-400" size={20} />
-            <span className="text-xs tracking-[0.3em] uppercase text-gray-400">
+            <Minus className="text-[var(--text-tertiary)]" size={20} />
+            <span className="text-xs tracking-[0.3em] uppercase text-[var(--text-tertiary)]">
               {language === 'de' ? 'Engagement' : 'Engagement'}
             </span>
           </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-px bg-gray-200">
+        <div className="grid lg:grid-cols-3 gap-px bg-[var(--border)]">
           {packages.map((pkg, index) => (
             <motion.div
               key={index}
@@ -161,27 +161,27 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className={`bg-white p-8 lg:p-10 ${pkg.featured ? 'lg:-mt-4 lg:mb-4 relative' : ''}`}
+              className={`bg-[var(--bg-primary)] p-8 lg:p-10 ${pkg.featured ? 'lg:-mt-4 lg:mb-4 relative' : ''}`}
             >
               {pkg.featured && (
-                <div className="absolute -top-px left-0 right-0 h-1 bg-[#0a1628]" />
+                <div className="absolute -top-px left-0 right-0 h-1 bg-[var(--accent)]" />
               )}
               
               <div className="mb-8">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-2">{pkg.duration}</p>
-                <h3 className="font-serif text-2xl text-gray-900 mb-4">{pkg.name}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{pkg.description}</p>
+                <p className="text-xs text-[var(--text-tertiary)] uppercase tracking-wider mb-2">{pkg.duration}</p>
+                <h3 className="font-serif text-2xl text-[var(--text-primary)] mb-4">{pkg.name}</h3>
+                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">{pkg.description}</p>
               </div>
 
               <div className="mb-8">
-                <span className="text-4xl font-serif text-gray-900">{pkg.price}</span>
-                <span className="text-gray-400 text-sm">/{language === 'de' ? 'Monat' : 'month'}</span>
+                <span className="text-4xl font-serif text-[var(--text-primary)]">{pkg.price}</span>
+                <span className="text-[var(--text-tertiary)] text-sm">/{language === 'de' ? 'Monat' : 'month'}</span>
               </div>
 
               <ul className="space-y-3 mb-8">
                 {pkg.includes.map((item, i) => (
-                  <li key={i} className="text-sm text-gray-600 flex items-start gap-3">
-                    <span className="text-gray-300 mt-1">—</span>
+                  <li key={i} className="text-sm text-[var(--text-secondary)] flex items-start gap-3">
+                    <span className="text-[var(--text-tertiary)] mt-1">—</span>
                     {item}
                   </li>
                 ))}
@@ -189,7 +189,7 @@ export default function Services() {
 
               <a
                 href="#contact"
-                className="group inline-flex items-center gap-2 text-sm tracking-wider uppercase text-gray-900 hover:text-gray-600 transition-colors"
+                className="group inline-flex items-center gap-2 text-sm tracking-wider uppercase text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
               >
                 {language === 'de' ? 'Anfragen' : 'Inquire'}
                 <ArrowUpRight size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
