@@ -122,10 +122,10 @@ export default function Hero() {
             {/* Logo */}
             <a href="/" className="flex items-center gap-3">
               <div className="w-10 h-10 bg-[var(--accent)] flex items-center justify-center">
-                <span className="text-white font-serif text-xl font-medium">SA</span>
+                <span className="text-white font-serif text-xl font-medium">JF</span>
               </div>
               <div className="hidden sm:block">
-                <span className="font-serif text-xl text-[var(--text-primary)] tracking-tight">Shift Autonomy</span>
+                <span className="font-serif text-xl text-[var(--text-primary)] tracking-tight">Juri Fedjaev</span>
               </div>
             </a>
 
