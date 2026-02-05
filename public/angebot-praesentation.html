@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Advisory & Execution Partnership | Juri Fedjaev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a1628;
+            --navy-light: #152238;
+            --gold: #d4a84b;
+            --gold-light: #e8c46a;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray: #8a9199;
+            --gray-dark: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateX(100px);
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            padding: 60px 80px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .slide.prev {
+            transform: translateX(-100px);
+        }
+
+        /* Slide Types */
+        .slide-dark {
+            background: var(--navy);
+            color: var(--white);
+        }
+
+        .slide-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: var(--white);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 40%, rgba(212, 168, 75, 0.03) 50%, transparent 60%);
+            transform: rotate(15deg);
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+            color: var(--navy);
+        }
+
+        .slide-dark h2, .slide-hero h2 {
+            color: var(--white);
+        }
+
+        h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            color: var(--gray-dark);
+        }
+
+        .slide-dark p, .slide-hero p {
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        /* Hero Slide Specifics */
+        .hero-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 800px;
+        }
+
+        .hero-divider {
+            width: 80px;
+            height: 3px;
+            background: var(--gold);
+            margin: 2.5rem auto;
+        }
+
+        .hero-name {
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        /* Slide Header */
+        .slide-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .slide-header h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(10, 22, 40, 0.03);
+            border-radius: 4px;
+        }
+
+        .slide-dark .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Expertise Bars */
+        .expertise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .expertise-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .expertise-label {
+            width: 200px;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .expertise-bar {
+            flex: 1;
+            height: 8px;
+            background: rgba(10, 22, 40, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .slide-dark .expertise-bar {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .expertise-fill {
+            height: 100%;
+            background: var(--gold);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .expertise-percent {
+            width: 60px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        /* Service Cards */
+        .service-card {
+            background: var(--gray-light);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .service-price {
+            text-align: right;
+        }
+
+        .price-amount {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .price-period {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .service-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 1rem;
+            color: var(--gray-dark);
+        }
+
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .feature-icon::after {
+            content: '✓';
+            color: var(--navy);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(10, 22, 40, 0.1);
+        }
+
+        .slide-dark .comparison-table th,
+        .slide-dark .comparison-table td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table th {
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+        }
+
+        .comparison-table td {
+            font-size: 1.1rem;
+        }
+
+        .comparison-table td:first-child {
+            font-weight: 500;
+        }
+
+        .highlight {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* Pricing Chart */
+        .pricing-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3rem;
+            height: 250px;
+            margin: 3rem 0;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(10, 22, 40, 0.1);
+        }
+
+        .slide-dark .pricing-chart {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-bar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .bar {
+            width: 120px;
+            background: var(--gold);
+            border-radius: 4px 4px 0 0;
+            transition: height 0.8s ease;
+            position: relative;
+        }
+
+        .bar-label {
+            position: absolute;
+            top: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            white-space: nowrap;
+        }
+
+        .bar-name {
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* ROI Section */
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .roi-card {
+            background: rgba(212, 168, 75, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .roi-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gold);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .roi-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            color: var(--navy);
+        }
+
+        .slide-dark .roi-title {
+            color: var(--white);
+        }
+
+        .roi-value {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .roi-desc {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        /* Case Study */
+        .case-study {
+            background: var(--gray-light);
+            padding: 2.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .case-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .case-tag {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .case-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(10, 22, 40, 0.1);
+        }
+
+        .case-result {
+            text-align: center;
+        }
+
+        .case-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .case-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        /* Next Steps */
+        .steps-timeline {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            flex: 1;
+            padding: 1.5rem;
+            background: rgba(10, 22, 40, 0.03);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            color: var(--navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--navy);
+        }
+
+        .step-desc {
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(212, 168, 75, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .contact-text {
+            font-size: 1.1rem;
+        }
+
+        .contact-text strong {
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+            margin-bottom: 0.25rem;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+
+        .qr-placeholder svg {
+            width: 160px;
+            height: 160px;
+        }
+
+        /* Two Column Layout */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .col-content h4 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            color: var(--navy);
+        }
+
+        .slide-dark .col-content h4 {
+            color: var(--white);
+        }
+
+        .col-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .col-content li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 1.05rem;
+        }
+
+        .col-content li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-btn:hover {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            z-index: 1000;
+        }
+
+        .slide-dark .slide-counter,
+        .slide-hero .slide-counter {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        /* Footer Note */
+        .footer-note {
+            position: absolute;
+            bottom: 30px;
+            right: 100px;
+            font-size: 0.75rem;
+            color: var(--gray);
+            opacity: 0.7;
+        }
+
+        .slide-dark .footer-note,
+        .slide-hero .footer-note {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Print Styles */
+        @media print {
+            .slide {
+                page-break-after: always;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                position: relative !important;
+            }
+            
+            .nav-controls,
+            .slide-counter,
+            .progress-bar {
+                display: none !important;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .slide {
+                padding: 40px 50px;
+            }
+            
+            h1, .hero-title {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .two-col {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="slide-counter" id="slideCounter">1 / 14</div>
+    
+    <div class="presentation" id="presentation">
+        
+        <!-- SLIDE 1: Title Slide -->
+        <div class="slide slide-hero active">
+            <div class="hero-label">Strategic Advisory & Execution Partnership</div>
+            <h1 class="hero-title">From Strategy to<br>Operational Excellence</h1>
+            <div class="hero-divider"></div>
+            <p class="hero-subtitle">Premium Consulting for Autonomous Mobility,<br>AI Transformation & Operations Excellence</p>
+            <div class="hero-name" style="margin-top: 4rem;">Juri Fedjaev</div>
+            <div class="footer-note">Confidential | Januar 2025</div>
+        </div>
+
+        <!-- SLIDE 2: The Challenge -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>The Challenge</h3>
+                <h2>Why Most Transformations Fail</h2>
+            </div>
+            
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; max-width: 900px;">
+                In a market defined by accelerated technological disruption and intensifying competition, companies don't lack strategic vision—they lack operational excellence in execution.
+            </p>
+            
+            <div class="two-col" style="margin-top: 2rem;">
+                <div class="col-content">
+                    <h4>The Problem</h4>
+                    <ul>
+                        <li>Strategy without execution remains PowerPoint</li>
+                        <li>Technical complexity outpaces organizational capability</li>
+                        <li>OKRs set but never achieved</li>
+                        <li>Data platforms built, value unrealized</li>
+                        <li>Time-to-market keeps extending</li>
+                    </ul>
+                </div>
+                <div class="col-content">
+                    <h4>The Cost of Inaction</h4>
+                    <ul>
+                        <li>Lost market opportunities: €500K–€2M</li>
+                        <li>Delayed Series-C readiness</li>
+                        <li>Technical debt accumulation</li>
+                        <li>Team burnout and talent loss</li>
+                        <li>Competitive disadvantage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: The Solution -->
+        <div class="slide slide-dark">
+            <div class="slide-header">
+                <h3>The Solution</h3>
+                <h2>Three Integrated Service Models</h2>
+            </div>
+            
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                From rapid diagnosis to full operational leadership—flexible, scalable, and results-oriented.
+            </p>
+            
+            <div class="pricing-chart">
+                <div class="pricing-bar">
+                    <div class="bar" style="height: 80px;">
+                        <div class="bar-label">€8.5K</div>
+                    </div>
+                    <div class="bar-name">Strategy Assessment<br><small style="opacity: 0.7;">2 Weeks</small></div>
+                </div>
+                <div class="pricing-bar">
+                    <div class="bar" style="height: 140px;">
+                        <div class="bar-label">€15K</div>
+                    </div>
+                    <div class="bar-name">Transformation Partner<br><small style="opacity: 0.7;">Monthly</small></div>
+                </div>
+                <div class="pricing-bar">
+                    <div class="bar" style="height: 220px;">
+                        <div class="bar-label">€25K</div>
+                    </div>
+                    <div class="bar-name">COO-as-a-Service<br><small style="opacity: 0.7;">Monthly</small></div>
+                </div>
+            </div>
+            
+            <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 1rem;">
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Weeks to Insights</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3-6</div>
+                    <div class="stat-label">Months to Transform</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6-12+</div>
+                    <div class="stat-label">Months to Scale</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: About Juri -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Your Advisor</h3>
+                <h2>Juri Fedjaev</h2>
+            </div>
+            
+            <div class="two-col">
+                <div class="col-content">
+                    <h4>Current Role</h4>
+                    <p style="margin-bottom: 1.5rem;"><strong>Data Product Lead</strong><br>Volkswagen Group</p>
+                    
+                    <h4>Previous Experience</h4>
+                    <ul>
+                        <li>Head of Program Management</li>
+                        <li>Volkswagen Autonomous Mobility</li>
+                        <li>McKinsey & BCG Talent Programs</li>
+                        <li>10+ Years C-Level Experience</li>
+                    </ul>
+                    
+                    <h4>Education</h4>
+                    <ul>
+                        <li>TUM — Engineering</li>
+                        <li>Ecole Centrale de Lille</li>
+                        <li>Collège des Ingénieurs — MBA</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="stats-grid" style="grid-template-columns: 1fr; gap: 1rem;">
+                        <div class="stat-item" style="text-align: left; display: flex; align-items: center; gap: 2rem;">
+                            <div class="stat-number" style="font-size: 4rem;">€1.9B</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.1rem;">Strategy Programs</div>
+                                <div style="color: var(--gray); font-size: 0.95rem;">Managed at VW Autonomous Mobility</div>
+                            </div>
+                        </div>
+                        <div class="stat-item" style="text-align: left; display: flex; align-items: center; gap: 2rem;">
+                            <div class="stat-number" style="font-size: 4rem;">0→100</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.1rem;">Vehicle Deployment</div>
+                                <div style="color: var(--gray); font-size: 0.95rem;">Scaled autonomous fleet operations</div>
+                            </div>
+                        </div>
+                        <div class="stat-item" style="text-align: left; display: flex; align-items: center; gap: 2rem;">
+                            <div class="stat-number" style="font-size: 4rem;">200TB+</div>
+                            <div>
+                                <div style="font-weight: 600; font-size: 1.1rem;">Data Platforms</div>
+                                <div style="color: var(--gray); font-size: 0.95rem;">Architected and scaled</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Expertise Domains -->
+        <div class="slide slide-dark">
+            <div class="slide-header">
+                <h3>Expertise Domains</h3>
+                <h2>Deep Specialization, Proven Results</h2>
+            </div>
+            
+            <div class="expertise-list">
+                <div class="expertise-item">
+                    <div class="expertise-label">Program Management</div>
+                    <div class="expertise-bar">
+                        <div class="expertise-fill" style="width: 98%;"></div>
+                    </div>
+                    <div class="expertise-percent">98%</div>
+                </div>
+                <div class="expertise-item">
+                    <div class="expertise-label">Autonomous Mobility</div>
+                    <div class="expertise-bar">
+                        <div class="expertise-fill" style="width: 95%;"></div>
+                    </div>
+                    <div class="expertise-percent">95%</div>
+                </div>
+                <div class="expertise-item">
+                    <div class="expertise-label">Operations Excellence</div>
+                    <div class="expertise-bar">
+                        <div class="expertise-fill" style="width: 92%;"></div>
+                    </div>
+                    <div class="expertise-percent">92%</div>
+                </div>
+                <div class="expertise-item">
+                    <div class="expertise-label">AI/ML Strategy</div>
+                    <div class="expertise-bar">
+                        <div class="expertise-fill" style="width: 90%;"></div>
+                    </div>
+                    <div class="expertise-percent">90%</div>
+                </div>
+                <div class="expertise-item">
+                    <div class="expertise-label">Data Platforms</div>
+                    <div class="expertise-bar">
+                        <div class="expertise-fill" style="width: 88%;"></div>
+                    </div>
+                    <div class="expertise-percent">88%</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 3rem; font-size: 0.95rem; opacity: 0.7;">
+                *Self-assessment based on 10+ years of C-level experience across automotive, AI, and technology sectors
+            </p>
+            
+            <div class="stats-grid" style="margin-top: 3rem;">
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧠</div>
+                    <div class="stat-label">BCI & Neurotech</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Published EEG Research</div>
+                </div>
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🤖</div>
+                    <div class="stat-label">AI/ML Platforms</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Deep Learning Expert</div>
+                </div>
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚗</div>
+                    <div class="stat-label">Autonomous Driving</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">Fleet Operations</div>
+                </div>
+                <div class="stat-item">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⚡</div>
+                    <div class="stat-label">Energy Systems</div>
+                    <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">IEEE Published</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Service 1 - Strategy Assessment -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Service Package 1</h3>
+                <h2>Strategy Assessment</h2>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-header">
+                    <div>
+                        <div class="service-title">2-Week Intensive Diagnostic</div>
+                        <div style="color: var(--gray); margin-top: 0.5rem;">For leadership teams needing rapid strategic clarity</div>
+                    </div>
+                    <div class="service-price">
+                        <div class="price-amount">€8,500</div>
+                        <div class="price-period">one-time fee</div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 2rem;">
+                    <div>
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.2rem; margin-bottom: 1rem;">Week 1: Discovery</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Stakeholder interviews (Leadership, Tech, Ops)
+                            </li>
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Process & system audit
+                            </li>
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Data & ML infrastructure review
+                            </li>
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Competitive & market analysis
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.2rem; margin-bottom: 1rem;">Week 2: Synthesis</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Gap analysis & prioritization
+                            </li>
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Strategy workshop (4 hours)
+                            </li>
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                90-day roadmap development
+                            </li>
+                            <li style="padding: 0.4rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">→</span>
+                                Executive summary & report
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(10, 22, 40, 0.1);">
+                    <strong>Deliverables:</strong> 30-page assessment report, prioritized initiatives map, 90-day implementation roadmap, board presentation
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Service 2 - Transformation Partner -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Service Package 2</h3>
+                <h2>Transformation Partner</h2>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-header">
+                    <div>
+                        <div class="service-title">Ongoing Transformation Support</div>
+                        <div style="color: var(--gray); margin-top: 0.5rem;">For companies in transformation phases</div>
+                    </div>
+                    <div class="service-price">
+                        <div class="price-amount">€15K</div>
+                        <div class="price-period">per month</div>
+                    </div>
+                </div>
+                
+                <div style="margin: 1.5rem 0;">
+                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--gray); margin-bottom: 1rem;">
+                        <span>Assessment</span>
+                        <span>Quick Wins</span>
+                        <span>Transformation</span>
+                        <span>Scale</span>
+                    </div>
+                    <div style="height: 4px; background: rgba(10, 22, 40, 0.1); border-radius: 2px; position: relative;">
+                        <div style="position: absolute; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%); border-radius: 2px;"></div>
+                        <div style="position: absolute; left: 10%; top: -6px; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; border: 3px solid white;"></div>
+                        <div style="position: absolute; left: 35%; top: -6px; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; border: 3px solid white;"></div>
+                        <div style="position: absolute; left: 65%; top: -6px; width: 16px; height: 16px; background: var(--gold); border-radius: 50%; border: 3px solid white;"></div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-top: 0.5rem; color: var(--gray);">
+                        <span>Wk 1-2</span>
+                        <span>Mo 1-3</span>
+                        <span>Mo 3-6</span>
+                        <span>Mo 6+</span>
+                    </div>
+                </div>
+                
+                <div class="service-features">
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>OKR framework design & implementation</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>Roadmap development & tracking</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>Team structure & agile transformation</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>ML-Ops & data strategy</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>Investor-readiness preparation</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon"></div>
+                        <span>Change management support</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1.5rem; font-size: 0.95rem; color: var(--gray);">
+                    <strong>Availability:</strong> 2-3 days/week • <strong>Minimum term:</strong> 3 months • <strong>Response SLA:</strong> 4 hours
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Service 3 - COO-as-a-Service -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Service Package 3</h3>
+                <h2>COO-as-a-Service</h2>
+            </div>
+            
+            <div class="service-card" style="border-left-color: var(--navy); background: linear-gradient(135deg, var(--gray-light) 0%, white 100%);">
+                <div class="service-header">
+                    <div>
+                        <div class="service-title">Full Operational Leadership</div>
+                        <div style="color: var(--gray); margin-top: 0.5rem;">For scale-ups and transformation companies</div>
+                    </div>
+                    <div class="service-price">
+                        <div class="price-amount">€25K</div>
+                        <div class="price-period">per month</div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem;">
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Operations</div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">P&L, Budget, Vendors</div>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎯</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Strategy</div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">Planning, Board, M&A</div>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👥</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">People</div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">Leadership, Culture</div>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚙️</div>
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">Technology</div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">AI/ML, Security</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Engagement Model</div>
+                            <div style="font-size: 0.95rem; color: var(--gray);">3-4 days/week • Direct CEO/Board reporting • Operational authority</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-weight: 600; margin-bottom: 0.25rem;">Optimal for</div>
+                            <div style="font-size: 0.95rem; color: var(--gray);">20-150 employees • €5M-€50M revenue</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Retainer Logic -->
+        <div class="slide slide-dark">
+            <div class="slide-header">
+                <h3>Why Retainer?</h3>
+                <h2>The Retainer Advantage</h2>
+            </div>
+            
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Retainer-based consulting is the standard model for leading strategy firms on long-term mandates.
+            </p>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Advantage</th>
+                        <th>Description</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cost Control</td>
+                        <td>Fixed monthly costs without budget surprises</td>
+                        <td class="highlight">Predictable budgeting</td>
+                    </tr>
+                    <tr>
+                        <td>Prioritization</td>
+                        <td>Guaranteed availability and faster response times</td>
+                        <td class="highlight">4h SLA guaranteed</td>
+                    </tr>
+                    <tr>
+                        <td>Strategic Depth</td>
+                        <td>Continuous engagement enables deep understanding</td>
+                        <td class="highlight">Context-aware advice</td>
+                    </tr>
+                    <tr>
+                        <td>Proactive Advisory</td>
+                        <td>Need-based consulting, not billing-optimized</td>
+                        <td class="highlight">Focus on value</td>
+                    </tr>
+                    <tr>
+                        <td>Scalability</td>
+                        <td>Intensity adjustable by project phase</td>
+                        <td class="highlight">Flexible commitment</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(212, 168, 75, 0.1); border-radius: 8px;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div style="font-size: 1.5rem;">💡</div>
+                    <div>
+                        <strong>Billing Mechanism:</strong> Monthly retainer due first business day of month. Includes all agreed consulting services, workshops, and reports. Travel expenses billed separately (economy flights, mid-range hotels).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Pricing Alternatives -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Pricing Alternatives</h3>
+                <h2>Daily Rate Options</h2>
+            </div>
+            
+            <p style="margin-bottom: 2rem;">For individual projects or specific tasks outside the retainer model:</p>
+            
+            <table class="comparison-table" style="margin-top: 1rem;">
+                <thead>
+                    <tr>
+                        <th>Service Level</th>
+                        <th>Day Rate</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Senior Advisor</strong></td>
+                        <td style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700;">€3,500</td>
+                        <td>Board meetings, strategy workshops, investor presentations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Execution Lead</strong></td>
+                        <td style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700;">€2,800</td>
+                        <td>Project execution, OKR implementation, process design</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Subject Matter Expert</strong></td>
+                        <td style="font-family: 'Crimson Pro', serif; font-size: 1.5rem; color: var(--gold); font-weight: 700;">€2,200</td>
+                        <td>Architecture reviews, ML evaluation, due diligence</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 3rem; padding: 1.5rem; background: var(--gray-light); border-radius: 8px;">
+                <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.2rem; margin-bottom: 1rem;">Market Benchmark</h4>
+                <p style="margin-bottom: 1rem;">
+                    C-Level Interim Manager (Automotive/AI): <strong>€2,500–€5,000/day</strong> at Big-4 & boutique firms
+                </p>
+                <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--gold); font-weight: 600;">
+                    <span>→</span>
+                    <span>Our prices reflect premium expertise with efficient structure—no overhead.</span>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem; text-align: center; font-size: 1.1rem; color: var(--gray);">
+                💡 <strong>Recommendation:</strong> For &gt;10 days/month, the retainer model is typically more cost-efficient
+            </div>
+        </div>
+
+        <!-- SLIDE 11: ROI & Value -->
+        <div class="slide slide-dark">
+            <div class="slide-header">
+                <h3>Return on Investment</h3>
+                <h2>Quantified Business Value</h2>
+            </div>
+            
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Investment must justify itself in measurable business value. Three quantifiable dimensions:
+            </p>
+            
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="roi-icon">⏱️</div>
+                    <div class="roi-title">Time-to-Value</div>
+                    <div class="roi-value">12→6 Mo</div>
+                    <div class="roi-desc">MVP launch acceleration<br><strong>ROI: 3-6x</strong> at market entry</div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-icon">🛡️</div>
+                    <div class="roi-title">Opportunity Cost</div>
+                    <div class="roi-value">€500K–€2M</div>
+                    <div class="roi-desc">Early architecture error detection<br><strong>Avoided losses</strong></div>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-icon">📈</div>
+                    <div class="roi-title">Scale Efficiency</div>
+                    <div class="roi-value">30%+</div>
+                    <div class="roi-desc">Productivity gain through agile<br><strong>€300K–€1M/year</strong></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; padding: 2rem; background: rgba(255, 255, 255, 0.05); border-radius: 8px;">
+                <div style="display: flex; align-items: center; gap: 2rem;">
+                    <div style="font-size: 3rem;">💰</div>
+                    <div>
+                        <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem;">Example Calculation</div>
+                        <div style="opacity: 0.9;">
+                            6-month Transformation Partner engagement: <strong>€90,000</strong><br>
+                            Typical value creation: <strong>€500K–€2M+</strong> through faster time-to-market, avoided costs, and efficiency gains<br>
+                            <span style="color: var(--gold); font-weight: 600;">Conservative ROI: 5-20x</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem; font-size: 0.9rem; opacity: 0.6;">
+                *Disclaimer: Every case is individual. We guarantee maximum engagement quality and proven methodology, not specific results.
+            </p>
+        </div>
+
+        <!-- SLIDE 12: Case Study -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Track Record</h3>
+                <h2>Case Study: Autonomous Mobility Scale-up</h2>
+            </div>
+            
+            <div class="case-study">
+                <div class="case-header">
+                    <div class="case-title">Series-B Autonomous Trucking Startup</div>
+                    <div class="case-tag">278x ROI</div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    <div>
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.2rem; margin-bottom: 1rem; color: var(--navy);">Situation</h4>
+                        <p style="margin-bottom: 1.5rem;">
+                            Operational inefficiencies delaying Series-C readiness. Team struggling with OKR alignment, data pipeline issues, and board reporting.
+                        </p>
+                        
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.2rem; margin-bottom: 1rem; color: var(--navy);">Intervention</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.3rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">•</span>
+                                OKR framework implementation
+                            </li>
+                            <li style="padding: 0.3rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">•</span>
+                                Data pipeline restructuring
+                            </li>
+                            <li style="padding: 0.3rem 0; padding-left: 1.5rem; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--gold);">•</span>
+                                Board reporting optimization
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="font-family: 'Crimson Pro', serif; font-size: 1.2rem; margin-bottom: 1rem; color: var(--navy);">Results</h4>
+                        <div class="case-results" style="border: none; padding: 0; grid-template-columns: 1fr;">
+                            <div class="case-result" style="text-align: left; display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gray-light); border-radius: 8px;">
+                                <div class="case-number">40%</div>
+                                <div>
+                                    <div style="font-weight: 600;">Faster Releases</div>
+                                    <div style="font-size: 0.9rem; color: var(--gray);">Development velocity improvement</div>
+                                </div>
+                            </div>
+                            <div class="case-result" style="text-align: left; display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gray-light); border-radius: 8px; margin-top: 1rem;">
+                                <div class="case-number">€25M</div>
+                                <div>
+                                    <div style="font-weight: 600;">Series-C Raised</div>
+                                    <div style="font-size: 0.9rem; color: var(--gray);">Successful funding round</div>
+                                </div>
+                            </div>
+                            <div class="case-result" style="text-align: left; display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--gray-light); border-radius: 8px; margin-top: 1rem;">
+                                <div class="case-number">€90K</div>
+                                <div>
+                                    <div style="font-weight: 600;">Investment</div>
+                                    <div style="font-size: 0.9rem; color: var(--gray);">6-month engagement cost</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: Next Steps -->
+        <div class="slide">
+            <div class="slide-header">
+                <h3>Getting Started</h3>
+                <h2>Next Steps</h2>
+            </div>
+            
+            <div class="steps-timeline">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Initial Call</div>
+                    <div class="step-desc">Free 30-minute consultation to assess needs and fit</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Scope Definition</div>
+                    <div class="step-desc">Workshop with key stakeholders to define engagement</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Customization</div>
+                    <div class="step-desc">Tailoring packages to your specific requirements</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Kick-off</div>
+                    <div class="step-desc">Contracts, NDAs, first working session</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; padding: 2rem; background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%); border-radius: 8px; color: white; text-align: center;">
+                <div style="font-size: 1.3rem; font-weight: 500; margin-bottom: 1rem;">Ready to transform your operations?</div>
+                <div style="font-size: 1.1rem; opacity: 0.9;">
+                    Let's discuss how we can accelerate your path to operational excellence.
+                </div>
+                <div style="margin-top: 1.5rem; font-size: 1.5rem; color: var(--gold); font-weight: 600;">
+                    → Schedule your free consultation today
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: Contact -->
+        <div class="slide slide-hero">
+            <div class="hero-label">Let's Connect</div>
+            <h1 class="hero-title" style="font-size: 3.5rem;">Start the Conversation</h1>
+            
+            <div class="contact-grid" style="margin-top: 3rem; width: 100%; max-width: 900px;">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-text">
+                            <strong>Email</strong>
+                            <a href="mailto:juri@fedjaev.com" style="color: var(--gold); text-decoration: none;">juri@fedjaev.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💼</div>
+                        <div class="contact-text">
+                            <strong>LinkedIn</strong>
+                            <a href="https://linkedin.com/in/jurifedjaev" style="color: var(--gold); text-decoration: none;">linkedin.com/in/jurifedjaev</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🌐</div>
+                        <div class="contact-text">
+                            <strong>Website</strong>
+                            <a href="https://fedjaev.com" style="color: var(--gold); text-decoration: none;">fedjaev.com</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="qr-placeholder">
+                        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                            <!-- QR Code Pattern for fedjaev.com -->
+                            <rect x="0" y="0" width="200" height="200" fill="white"/>
+                            <rect x="10" y="10" width="60" height="60" fill="#0a1628"/>
+                            <rect x="20" y="20" width="40" height="40" fill="white"/>
+                            <rect x="30" y="30" width="20" height="20" fill="#0a1628"/>
+                            <rect x="130" y="10" width="60" height="60" fill="#0a1628"/>
+                            <rect x="140" y="20" width="40" height="40" fill="white"/>
+                            <rect x="150" y="30" width="20" height="20" fill="#0a1628"/>
+                            <rect x="10" y="130" width="60" height="60" fill="#0a1628"/>
+                            <rect x="20" y="140" width="40" height="40" fill="white"/>
+                            <rect x="30" y="150" width="20" height="20" fill="#0a1628"/>
+                            <rect x="90" y="10" width="10" height="10" fill="#0a1628"/>
+                            <rect x="110" y="10" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="30" width="10" height="10" fill="#0a1628"/>
+                            <rect x="100" y="40" width="10" height="10" fill="#0a1628"/>
+                            <rect x="80" y="50" width="10" height="10" fill="#0a1628"/>
+                            <rect x="100" y="50" width="10" height="10" fill="#0a1628"/>
+                            <rect x="120" y="50" width="10" height="10" fill="#0a1628"/>
+                            <rect x="10" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="30" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="50" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="70" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="110" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="130" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="150" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="170" y="80" width="10" height="10" fill="#0a1628"/>
+                            <rect x="80" y="90" width="10" height="10" fill="#0a1628"/>
+                            <rect x="100" y="90" width="10" height="10" fill="#0a1628"/>
+                            <rect x="120" y="90" width="10" height="10" fill="#0a1628"/>
+                            <rect x="140" y="90" width="10" height="10" fill="#0a1628"/>
+                            <rect x="160" y="90" width="10" height="10" fill="#0a1628"/>
+                            <rect x="180" y="90" width="10" height="10" fill="#0a1628"/>
+                            <rect x="10" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="40" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="60" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="120" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="140" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="170" y="100" width="10" height="10" fill="#0a1628"/>
+                            <rect x="80" y="110" width="10" height="10" fill="#0a1628"/>
+                            <rect x="100" y="110" width="10" height="10" fill="#0a1628"/>
+                            <rect x="130" y="110" width="10" height="10" fill="#0a1628"/>
+                            <rect x="150" y="110" width="10" height="10" fill="#0a1628"/>
+                            <rect x="10" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="40" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="60" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="110" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="140" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="170" y="120" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="140" width="10" height="10" fill="#0a1628"/>
+                            <rect x="110" y="140" width="10" height="10" fill="#0a1628"/>
+                            <rect x="130" y="140" width="10" height="10" fill="#0a1628"/>
+                            <rect x="150" y="140" width="10" height="10" fill="#0a1628"/>
+                            <rect x="170" y="140" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="150" width="10" height="10" fill="#0a1628"/>
+                            <rect x="120" y="150" width="10" height="10" fill="#0a1628"/>
+                            <rect x="140" y="150" width="10" height="10" fill="#0a1628"/>
+                            <rect x="160" y="150" width="10" height="10" fill="#0a1628"/>
+                            <rect x="180" y="150" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="170" width="10" height="10" fill="#0a1628"/>
+                            <rect x="110" y="170" width="10" height="10" fill="#0a1628"/>
+                            <rect x="140" y="170" width="10" height="10" fill="#0a1628"/>
+                            <rect x="160" y="170" width="10" height="10" fill="#0a1628"/>
+                            <rect x="180" y="170" width="10" height="10" fill="#0a1628"/>
+                            <rect x="90" y="180" width="10" height="10" fill="#0a1628"/>
+                            <rect x="110" y="180" width="10" height="10" fill="#0a1628"/>
+                            <rect x="130" y="180" width="10" height="10" fill="#0a1628"/>
+                            <rect x="150" y="180" width="10" height="10" fill="#0a1628"/>
+                            <rect x="180" y="180" width="10" height="10" fill="#0a1628"/>
+                        </svg>
+                    </div>
+                    <div style="text-align: center; margin-top: 1rem; font-size: 0.9rem; opacity: 0.7;">
+                        Scan for contact info
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; font-size: 0.9rem; opacity: 0.5;">
+                Confidential Proposal | Prices valid until 31.03.2025
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progressBar');
+        const slideCounter = document.getElementById('slideCounter');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+            
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+            slideCounter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                currentSlide = 0;
+                updateSlide();
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                currentSlide = totalSlides - 1;
+                updateSlide();
+            }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // Initialize
+        updateSlide();
+
+        // Animate expertise bars when slide becomes active
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.expertise-fill');
+                    fills.forEach(fill => {
+                        const width = fill.style.width;
+                        fill.style.width = '0';
+                        setTimeout(() => {
+                            fill.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.expertise-list').forEach(list => {
+            observer.observe(list);
+        });
+    </script>
+</body>
+</html>

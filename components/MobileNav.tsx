@@ -7,7 +7,7 @@ import { useTheme } from './ThemeProvider'
 import { Sun, Moon } from 'lucide-react'
 
 interface MobileNavProps {
-  navItems: { label: string; href: string }[]
+  navItems: { label: string; href: string; external?: boolean }[]
 }
 
 export default function MobileNav({ navItems }: MobileNavProps) {
@@ -94,7 +94,9 @@ export default function MobileNav({ navItems }: MobileNavProps) {
                     <motion.a
                       key={item.href}
                       href={item.href}
-                      onClick={closeMenu}
+                      onClick={item.external ? undefined : closeMenu}
+                      target={item.external ? '_blank' : undefined}
+                      rel={item.external ? 'noopener noreferrer' : undefined}
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.1 + 0.1 }}
